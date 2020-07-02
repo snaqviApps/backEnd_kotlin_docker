@@ -1,5 +1,6 @@
 package ghar.backend.kotlin.spirng5docker.service
 
+import ghar.backend.kotlin.spirng5docker.model.Employee
 import org.springframework.stereotype.Service
 
 /**
@@ -12,10 +13,12 @@ import org.springframework.stereotype.Service
 @Service
 class EmployeeService {
 
+    companion object {
+        val employeeDB = mutableMapOf(
+                1 to Employee(1, "Zem n Sis", "Managers", 500),
+                2 to Employee(1, "Micheal Yong", "Engineers", 450))
+    }
 
-     val employeeMap = hashMapOf(1 to "emp-1", 2 to "emp-2", 3 to "emp-3")
-
-    fun findEmployee(id: Int) = employeeMap[id] ?: "Not found"      // used 'Elvis Operator' for default
-                                                                    // value in case input value is null
+    fun createEmployee(employee: Employee) = employeeDB.put(employee.id, employee)
 
 }
