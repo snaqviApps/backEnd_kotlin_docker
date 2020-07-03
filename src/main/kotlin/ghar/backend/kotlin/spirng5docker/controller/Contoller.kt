@@ -13,9 +13,12 @@ class Contoller {
     @Autowired
     lateinit var employeeService: EmployeeService                
 
-    @PostMapping("/employeeEndPoint")
+    @PostMapping("/employeePost")
     fun createEmployee(@RequestBody employee: Employee): ResponseEntity<String> {
         employeeService.createEmployee(employee)
         return ResponseEntity.status(HttpStatus.CREATED).build<String>()
     }
+
+    @GetMapping("/employee/{idIn}")
+    fun getEmployee(@PathVariable("idIn") id: Int) = employeeService.getEmployee(id)
 }
