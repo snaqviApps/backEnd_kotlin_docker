@@ -2,6 +2,8 @@ package ghar.backend.kotlin.spirng5docker.controller
 
 import com.fasterxml.jackson.databind.util.ClassUtil.defaultValue
 import ghar.backend.kotlin.spirng5docker.model.Employee
+import ghar.backend.kotlin.spirng5docker.model.EmployeeUpdateReq
+import ghar.backend.kotlin.spirng5docker.service.DepaetmentService
 import ghar.backend.kotlin.spirng5docker.service.EmployeeService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -12,7 +14,10 @@ import org.springframework.web.bind.annotation.*
 class Contoller {
 
     @Autowired
-    lateinit var employeeService: EmployeeService                
+    lateinit var employeeService: EmployeeService
+
+    @Autowired
+    lateinit var departmentService: DepaetmentService
 
     @PostMapping("/employee")
     fun createEmployee(@RequestBody employee: Employee): ResponseEntity<String> {
@@ -28,4 +33,15 @@ class Contoller {
     fun getEmployees(@RequestParam("minAgeC", required = false) minAgeC: Int?,
                      @RequestParam("minSalary", required = false) minSalary: Double?)
             = employeeService.getAllEmployees(minAgeC, minSalary)
+
+    @GetMapping("/departments")
+    fun getAllDepartments() = departmentService.getAllDepartments()
+
+    @PutMapping("/employee/{id}")
+    fun updeteEmployee(@PathVariable id: Int,
+    @RequestBody updateReq: EmployeeUpdateReq){
+        employeeService.updateEmployee(id, updateReq)
+    }
+
 }
+
